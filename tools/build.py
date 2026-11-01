@@ -54,8 +54,7 @@ def body_html(text):
     return '\n'.join(out)
 
 
-NAV = [('index.html', '소개'), ('terms.html', '이용약관'), ('privacy.html', '개인정보 처리방침'),
-       ('delete-account.html', '계정 삭제')]
+NAV = [('index.html', '소개'), ('notice.html', '공지사항'), ('inquiry.html', '문의하기')]
 
 
 def page(filename, title, desc, main, extra_head=''):
@@ -100,10 +99,12 @@ def page(filename, title, desc, main, extra_head=''):
   <div class="wrap">
     <div>
       <p><strong>버블톡</strong> · 운영 {OPERATOR}</p>
-      <p>문의 <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+      <p>문의 <a href="inquiry.html">문의하기</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></p>
       <p>© 2026 버블톡. All rights reserved.</p>
     </div>
     <div class="links">
+      <a href="notice.html">공지사항</a>
+      <a href="inquiry.html">문의하기</a>
       <a href="terms.html">이용약관</a>
       <a href="privacy.html"><strong>개인정보 처리방침</strong></a>
       <a href="delete-account.html">계정 삭제 요청</a>
@@ -213,6 +214,9 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 <h3>만 14세 미만 회원의 보호자에게서 받는 정보</h3>
 {body_html(gs['보호자에게서 받는 정보'])}
 
+<h3>사이트(bubbletalk.kr) 문의하기를 쓸 때</h3>
+<ul><li>문의 종류·제목·내용과 운영자의 답변, 문의한 버블톡 계정(아이디·닉네임)</li></ul>
+
 <h2>2. 처리하지 않는 정보</h2>
 {body_html(ps['수집하지 않는 것'])}
 
@@ -224,6 +228,7 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 <ul>
 <li>퀴즈 진행 기록(문제·답)은 그 방에서 다음 퀴즈를 시작하거나 방이 사라질 때, 방장이 보관한 퀴즈 결과(참여자 닉네임·맞힌 개수·순위)는 방장이 지울 때, 퀴즈방 누적 점수판은 방장이 초기화하거나 방이 사라질 때 삭제합니다.</li>
 <li>보호자 동의가 5일 안에 오지 않은 만 14세 미만 아이 계정과 받은 정보는 지웁니다.</li>
+<li>사이트 문의와 답변은 탈퇴하면 계정과 함께 삭제합니다.</li>
 <li>파기할 때는 전자적 파일을 복구할 수 없는 방법으로 지웁니다.</li>
 </ul>
 
@@ -265,7 +270,7 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 </ul>
 
 <h2>10. 자동으로 수집하는 장치</h2>
-<p>버블톡 앱과 이 사이트는 광고나 행동 분석을 위한 쿠키·추적 도구를 쓰지 않습니다.</p>
+<p>버블톡 앱과 이 사이트는 광고나 행동 분석을 위한 쿠키·추적 도구를 쓰지 않습니다. 사이트에서 공지사항·문의하기에 로그인하면 로그인 상태를 기억하기 위해 그 브라우저의 저장소에 로그인 열쇠를 저장하며, 로그아웃하면 지워집니다.</p>
 
 <h2>11. 개인정보 보호책임자</h2>
 <table class="plain">
@@ -327,6 +332,20 @@ notfound_main = '''<section class="block cta"><div class="wrap">
 <a class="ghost" href="index.html">첫 화면으로</a>
 </div></section>'''
 
+BOARD_HEAD = ('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>\n'
+              '<script src="assets/board.js"></script>\n')
+
+
+def board(title, lead, call):
+    return f'''<article class="doc"><div class="wrap">
+<div class="account" id="account"></div>
+<h1>{title}</h1>
+<p class="meta">{lead}</p>
+<div id="board"><p class="empty">불러오는 중…</p></div>
+</div></article>
+<script>document.addEventListener('DOMContentLoaded', function () {{ BubbleBoard.{call}(); }});</script>'''
+
+
 DESC = '말하고, 보고, 퐁! 사라지는 대화. 아이도 안심하고 쓰는 메신저 버블톡.'
 (OUT / 'index.html').write_text(page('index.html', '소개', DESC, index_main), encoding='utf-8')
 (OUT / 'terms.html').write_text(page('terms.html', '서비스 이용약관', '버블톡 서비스 이용약관', terms_main), encoding='utf-8')
@@ -335,5 +354,10 @@ DESC = '말하고, 보고, 퐁! 사라지는 대화. 아이도 안심하고 쓰�
     page('delete-account.html', '계정 삭제 요청', '버블톡 계정과 개인정보 삭제를 요청하는 방법', delete_main), encoding='utf-8')
 (OUT / '404.html').write_text(
     re.sub(r'(href|src)="(?!https?:|mailto:|#|/)', r'\1="/', page('404.html', '페이지 없음', DESC, notfound_main)),
+    encoding='utf-8')
+(OUT / 'notice.html').write_text(page('notice.html', '공지사항', '버블톡 공지사항',
+    board('공지사항', '버블톡 소식과 업데이트, 점검 안내', 'notice'), BOARD_HEAD), encoding='utf-8')
+(OUT / 'inquiry.html').write_text(page('inquiry.html', '문의하기', '버블톡 문의하기',
+    board('문의하기', '버블톡 계정으로 로그인해서 남겨요. 쓴 사람과 운영자만 볼 수 있어요.', 'inquiry'), BOARD_HEAD),
     encoding='utf-8')
 print('ok', len(sections), 'terms sections')
