@@ -108,6 +108,7 @@ def page(filename, title, desc, main, extra_head=''):
       <a href="terms.html">이용약관</a>
       <a href="privacy.html"><strong>개인정보 처리방침</strong></a>
       <a href="delete-account.html">계정 삭제 요청</a>
+      <a href="child-safety.html">아동 안전 표준</a>
     </div>
   </div>
 </footer>
@@ -167,9 +168,9 @@ index_main = '''<section class="hero">
     <p class="sub">아이에게 처음 쥐여 주는 메신저가 될 수 있도록 만들었어요.</p>
     <ul class="promise">
       <li>대화 내용을 서버에 저장하거나 광고·분석에 쓰지 않아요.</li>
-      <li>전화번호와 실명을 받지 않아요. 주소록은 휴대폰 안에서만 열어요.</li>
+      <li>전화번호와 실명을 받지 않아요. 주소록은 읽지 않고, 초대할 사람만 직접 골라요.</li>
       <li>사진·이미지·파일 보내기가 없어요. 링크는 글자로만 보여요.</li>
-      <li>만 14세 미만은 보호자가 이메일로 동의해야 계정이 열려요.</li>
+      <li>만 14세 미만은 보호자 동의로 계정이 열리고, 새 친구도 보호자가 승인해요.</li>
       <li>버블·프로필을 신고할 수 있고, 신고한 사람은 상대에게 알리지 않아요.</li>
       <li>전화번호·계좌번호처럼 보이는 내용을 쓰면 보내기 전에 알려 줘요.</li>
     </ul>
@@ -347,7 +348,51 @@ def board(title, lead, call):
 
 
 DESC = '말하고, 보고, 퐁! 사라지는 대화. 아이도 안심하고 쓰는 메신저 버블톡.'
+# ── 아동 안전 표준 ──────────────────────────
+safety_main = f'''<article class="doc"><div class="wrap">
+<h1>아동 안전 표준</h1>
+<p class="meta">버블톡 · 운영 {OPERATOR}</p>
+<div class="summary">버블톡은 아동 성착취·학대(CSAE)와 아동 성착취물(CSAM)을 어떤 형태로도 허용하지 않아요.</div>
+<h2>금지하는 행위</h2>
+<ul>
+<li>아동을 성적으로 착취하거나 학대하는 모든 내용과 행위</li>
+<li>아동에게 성적으로 접근하거나 길들이는 행위(그루밍), 나이를 속여 접근하는 행위</li>
+<li>아동을 위협하거나 대화를 다른 앱·사이트로 유도해 해치려는 행위</li>
+</ul>
+<h2>앱을 만든 방식</h2>
+<ul>
+<li>대화로 사진·이미지·파일을 보낼 수 없어요. 링크는 글자로만 보이고 눌러도 열리지 않아요.</li>
+<li>낯선 사람을 추천하거나 무작위로 연결하지 않아요.</li>
+<li>만 14세 미만은 보호자 동의가 있어야 계정이 열려요.</li>
+<li>만 14세 미만의 새 친구는 보호자가 승인해야 맺어지고, 보호자는 대화 기능을 끌 수 있어요.</li>
+<li>아이가 처음 대화하기 전에 안전 안내를 보여 줘요.</li>
+<li>전화번호처럼 보이는 내용을 쓰면 보내기 전에 경고해요.</li>
+</ul>
+<h2>신고와 조치</h2>
+<ul>
+<li>앱 안에서 버블과 프로필을 신고할 수 있고, 신고한 사람은 상대에게 알리지 않아요.</li>
+<li>운영자가 신고를 확인해 경고, 이용 정지, 영구 정지로 조치해요. 아동에게 성적으로 접근하거나 위협한 경우는 바로 영구 정지해요.</li>
+<li>아동 성착취물이나 아동에 대한 위험을 알게 되면 해당 내용을 삭제하고, 관련 법령에 따라 수사기관과 관계 기관에 알려요.</li>
+<li>대한민국 법령을 포함해 적용되는 아동 보호 법령을 지켜요.</li>
+</ul>
+<h2>연락처</h2>
+<p>아동 안전 담당 연락처: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+<p>아이가 지금 위험하다면 112(경찰)에 바로 신고해 주세요.</p>
+<h2 lang="en">Child Safety Standards (English)</h2>
+<div lang="en">
+<p>Bubble Talk, operated by Maison de Moi, prohibits child sexual abuse and exploitation (CSAE) and child sexual abuse material (CSAM) in any form, including grooming and threats against children.</p>
+<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Guardians approve new friends for those accounts.</p>
+<p>Users can report bubbles and profiles inside the app. We review reports and warn, suspend, or permanently ban violators. We remove CSAM when we learn of it and report to law enforcement and relevant authorities as required by law.</p>
+<p>Child safety contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+</div>
+</div></article>'''
+
 (OUT / 'index.html').write_text(page('index.html', '소개', DESC, index_main), encoding='utf-8')
+(OUT / 'child-safety.html').write_text(
+    page('child-safety.html', '아동 안전 표준', '버블톡 아동 안전 표준과 신고·조치 방법', safety_main), encoding='utf-8')
+(OUT / 'admin.html').write_text(page('admin.html', '운영자 화면', '버블톡 운영자 화면',
+    board('운영자 화면', '신고를 확인하고 이용을 제한해요', 'admin'),
+    '<meta name="robots" content="noindex">\n' + BOARD_HEAD), encoding='utf-8')
 (OUT / 'terms.html').write_text(page('terms.html', '서비스 이용약관', '버블톡 서비스 이용약관', terms_main), encoding='utf-8')
 (OUT / 'privacy.html').write_text(page('privacy.html', '개인정보 처리방침', '버블톡 개인정보 처리방침', privacy_main), encoding='utf-8')
 (OUT / 'delete-account.html').write_text(

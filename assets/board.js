@@ -1,4 +1,5 @@
 // 버블톡 사이트 게시판 (서버 27단계): 공지사항(누구나 읽기, 운영자 쓰기) · 문의(버블톡 계정, 쓴 사람과 운영자만)
+// 운영자 화면 (서버 32단계): 신고 확인 · 이용 제한
 // 로그인은 앱과 같은 방식: 아이디 또는 이메일 + 비밀번호 → resolve_login → 비밀번호 로그인
 (function () {
   var SUPABASE_URL = 'https://lfiaqxbjadmefibiegvi.supabase.co';
@@ -45,7 +46,7 @@
     if (!el) return;
     if (me) {
       el.innerHTML = '<span><strong>' + esc(me.nickname) + '</strong> @' + esc(me.handle) +
-        (me.admin ? ' <span class="tag">운영자</span>' : '') + '</span>' +
+        (me.admin ? ' <a class="tag" href="admin.html">운영자 화면</a>' : '') + '</span>' +
         '<button type="button" class="linkish" id="logout">로그아웃</button>';
       $('#logout', el).onclick = async function () { await db.auth.signOut(); me = null; onChange(); };
     } else {
@@ -280,5 +281,128 @@
     };
   }
 
-  window.BubbleBoard = { notice: noticePage, inquiry: inquiryPage };
+  // ── 운영자 화면 ──
+  var KINDS = { warning: '경고', suspend7: '7일 정지', suspend30: '30일 정지', permanent: '영구 정지' };
+  var REPORT_KINDS = { dm: '1:1 대화', group: '단체방', profile: '프로필' };
+
+  function who(p) {
+    if (!p) return '알 수 없음';
+    return esc(p.nickname) + ' @' + esc(p.handle) + (p.under14 ? ' <span class="tag">만 14세 미만</span>' : '');
+  }
+
+  // 지금까지 받은 제재로 다음 단계를 고름 (풀린 제재는 세지 않음)
+  function nextKind(p) {
+    var n = p.sanctions.filter(function (s) { return !s.lifted_at; }).length;
+    return ['warning', 'suspend7', 'suspend30', 'permanent'][Math.min(n, 3)];
+  }
+
+  async function adminPage() {
+    var root = $('#board');
+    await loadMe();
+    renderAccountBar($('#account'), adminPage);
+    if (!me) {
+      loginForm(root, adminPage, '운영자 계정으로 로그인해 주세요.');
+      return;
+    }
+    if (!me.admin) {
+      say(root, '운영자만 볼 수 있어요.', true);
+      return;
+    }
+    try {
+      var id = param('id');
+      if (id) return await adminDetail(root, Number(id));
+      var open = param('done') === null;
+      var page = Number(param('page') || 0);
+      var data = await rpc('admin_reports', { p_open: open, p_page: page });
+      var html = '<p class="actions"><a class="ghost' + (open ? ' on' : '') + '" href="admin.html">처리 전</a> ' +
+        '<a class="ghost' + (open ? '' : ' on') + '" href="?done=1">처리 완료</a></p>';
+      if (!data.items.length) {
+        html += '<p class="empty">' + (open ? '처리할 신고가 없어요.' : '처리한 신고가 없어요.') + '</p>';
+      } else {
+        html += '<ul class="list">' + data.items.map(function (r) {
+          return '<li><a href="?id=' + r.id + '"><span class="tag">' + esc(REPORT_KINDS[r.kind] || r.kind) + '</span> ' +
+            '<span class="t">' + esc(r.reason) + '</span><span class="d">' +
+            (r.target ? esc(r.target.nickname) + ' · ' : '') + date(r.created_at, true) + '</span></a></li>';
+        }).join('') + '</ul>' + pager(page, data.total);
+      }
+      root.innerHTML = html;
+    } catch (e) {
+      say(root, '신고를 불러오지 못했어요. 잠시 뒤에 다시 해 주세요.', true);
+    }
+  }
+
+  async function adminDetail(root, id) {
+    var r = await rpc('admin_report', { p_id: id });
+    if (!r) { say(root, '없는 신고예요.', true); return; }
+    var html = '<article class="post"><h2>' + esc(r.reason) + '</h2>' +
+      '<p class="meta">' + esc(REPORT_KINDS[r.kind] || r.kind) + (r.room_name ? ' · ' + esc(r.room_name) : '') +
+      ' · ' + date(r.created_at, true) + '</p>' +
+      '<p>신고한 사람: ' + who(r.reporter) + '<br>신고 대상: ' + who(r.target) + '</p>';
+    html += r.items.length ? '<ul>' + r.items.map(function (b) {
+      return '<li><strong>' + esc(b.nickname || '알 수 없음') + '</strong> ' +
+        (b.hidden ? '<span class="tag">가림</span> ' : '') + esc(b.text) + '</li>';
+    }).join('') + '</ul>' : '<p class="meta">첨부한 버블이 없어요.</p>';
+    html += r.handled_at
+      ? '<p class="notice">처리 완료 · ' + date(r.handled_at, true) + (r.handled_note ? ' · ' + esc(KINDS[r.handled_note] || r.handled_note) : '') + '</p>'
+      : '';
+    html += '</article>';
+
+    r.people.forEach(function (p, i) {
+      html += '<article class="post"><p><strong>' + who(p) + '</strong> · 받은 신고 ' + p.reports + '건</p>';
+      if (p.sanctions.length) {
+        html += '<ul>' + p.sanctions.map(function (s) {
+          var active = !s.lifted_at && (s.kind === 'permanent' || (s.until && new Date(s.until) > new Date()));
+          return '<li>' + esc(KINDS[s.kind] || s.kind) + ' · ' + esc(s.reason) + ' · ' + date(s.started_at) +
+            (s.lifted_at ? ' (풀림)' : '') +
+            (active ? ' <button type="button" class="ghost danger" data-lift="' + s.id + '">풀기</button>' : '') + '</li>';
+        }).join('') + '</ul>';
+      }
+      if (!r.handled_at) {
+        var next = nextKind(p);
+        html += '<form class="form" data-user="' + esc(p.id) + '" data-i="' + i + '">' +
+          '<label>제재 단계<select name="kind">' + Object.keys(KINDS).map(function (k) {
+            return '<option value="' + k + '"' + (k === next ? ' selected' : '') + '>' + KINDS[k] + '</option>';
+          }).join('') + '</select></label>' +
+          '<label>사유 (본인에게 보여요, 200자까지)<input name="reason" maxlength="200" value="' + esc(r.reason) + '" required></label>' +
+          '<p class="actions"><button class="btn" type="submit">제재하기</button></p></form>';
+      }
+      html += '</article>';
+    });
+
+    if (!r.handled_at) {
+      html += '<form class="form" id="close"><label>제재 없이 처리 (메모, 500자까지)<input name="note" maxlength="500"></label>' +
+        '<p class="actions"><button class="btn" type="submit">처리 완료</button></p></form>';
+    }
+    html += '<div id="admin-msg"></div><p class="actions"><a class="ghost" href="admin.html">목록</a></p>';
+    root.innerHTML = html;
+
+    var fail = function () { say($('#admin-msg'), '처리하지 못했어요.', true); };
+    root.querySelectorAll('form[data-user]').forEach(function (f) {
+      f.onsubmit = async function (ev) {
+        ev.preventDefault();
+        var label = KINDS[f.kind.value];
+        var name = r.people[Number(f.dataset.i)].nickname;
+        if (!window.confirm(name + '님을 ' + label + ' 처리할까요?')) return;
+        var ok = await rpc('admin_sanction', {
+          p_user: f.dataset.user, p_kind: f.kind.value, p_reason: f.reason.value, p_report: id,
+        }).catch(function () { return false; });
+        if (ok) adminDetail(root, id); else fail();
+      };
+    });
+    root.querySelectorAll('[data-lift]').forEach(function (b) {
+      b.onclick = async function () {
+        if (!window.confirm('이 제재를 풀까요?')) return;
+        var ok = await rpc('admin_sanction_lift', { p_id: Number(b.dataset.lift) }).catch(function () { return false; });
+        if (ok) adminDetail(root, id); else fail();
+      };
+    });
+    var close = $('#close');
+    if (close) close.onsubmit = async function (ev) {
+      ev.preventDefault();
+      var ok = await rpc('admin_report_close', { p_id: id, p_note: close.note.value }).catch(function () { return false; });
+      if (ok) adminDetail(root, id); else fail();
+    };
+  }
+
+  window.BubbleBoard = { notice: noticePage, inquiry: inquiryPage, admin: adminPage };
 })();
