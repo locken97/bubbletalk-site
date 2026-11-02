@@ -292,7 +292,8 @@
 
   // 지금까지 받은 제재로 다음 단계를 고름 (풀린 제재는 세지 않음)
   function nextKind(p) {
-    var n = p.sanctions.filter(function (s) { return !s.lifted_at; }).length;
+    // 프로필 내리기 안내는 제재 단계로 세지 않음
+    var n = p.sanctions.filter(function (s) { return !s.lifted_at && !s.takedown; }).length;
     return ['warning', 'suspend7', 'suspend30', 'permanent'][Math.min(n, 3)];
   }
 
@@ -331,9 +332,38 @@
     }
   }
 
+  // 신고 확인용 사진 주소 (5분만 쓸 수 있음)
+  async function adminPhotos(p) {
+    var out = {};
+    var info = p.profile || {};
+    async function url(path) {
+      var r = await db.storage.from('avatars').createSignedUrl(path, 300);
+      return r.error ? null : r.data.signedUrl;
+    }
+    if (info.has_photo) out.photo = await url(p.id + '/avatar');
+    if (info.has_cover) out.cover = await url(p.id + '/cover');
+    return out;
+  }
+
+  function adminProfile(p, urls) {
+    var info = p.profile || {};
+    var rows = '';
+    if (info.has_photo) rows += '<label class="check"><input type="checkbox" value="photo"> 프로필 사진</label>' +
+      (urls.photo ? '<img class="admin-photo" src="' + esc(urls.photo) + '" alt="프로필 사진">' : '');
+    if (info.has_cover) rows += '<label class="check"><input type="checkbox" value="cover"> 배경 사진</label>' +
+      (urls.cover ? '<img class="admin-photo" src="' + esc(urls.cover) + '" alt="배경 사진">' : '');
+    if (info.status_message) rows += '<label class="check"><input type="checkbox" value="status"> 상태 메시지: ' + esc(info.status_message) + '</label>';
+    if (!rows) return '<p class="meta">내릴 프로필 내용이 없어요.</p>';
+    return '<form class="form" data-clear="' + esc(p.id) + '"><h3>프로필 내리기</h3>' +
+      '<p class="hint">지금까지 사진을 내린 횟수 ' + p.takedowns + '번. 사진을 내리면 7일 동안 올릴 수 없고, 3번이면 영구 제한돼요.</p>' +
+      rows + '<p class="actions"><button class="btn" type="submit">고른 항목 내리기</button></p></form>';
+  }
+
   async function adminDetail(root, id) {
     var r = await rpc('admin_report', { p_id: id });
     if (!r) { say(root, '없는 신고예요.', true); return; }
+    var photos = {};
+    for (var pi = 0; pi < r.people.length; pi++) photos[r.people[pi].id] = await adminPhotos(r.people[pi]);
     var html = '<article class="post"><h2>' + esc(r.reason) + '</h2>' +
       '<p class="meta">' + esc(REPORT_KINDS[r.kind] || r.kind) + (r.room_name ? ' · ' + esc(r.room_name) : '') +
       ' · ' + date(r.created_at, true) + '</p>' +
@@ -357,6 +387,7 @@
             (active ? ' <button type="button" class="ghost danger" data-lift="' + s.id + '">풀기</button>' : '') + '</li>';
         }).join('') + '</ul>';
       }
+      html += adminProfile(p, photos[p.id]);
       if (!r.handled_at) {
         var next = nextKind(p);
         html += '<form class="form" data-user="' + esc(p.id) + '" data-i="' + i + '">' +
@@ -364,6 +395,8 @@
             return '<option value="' + k + '"' + (k === next ? ' selected' : '') + '>' + KINDS[k] + '</option>';
           }).join('') + '</select></label>' +
           '<label>사유 (본인에게 보여요, 200자까지)<input name="reason" maxlength="200" value="' + esc(r.reason) + '" required></label>' +
+          (p.guardian ? '<label class="check"><input type="checkbox" name="guardian"> 보호자 계정도 함께 제재 (' + who(p.guardian) + ')</label>'
+            : (p.under14 ? '<p class="hint">보호자 계정은 없어요. 보호자에게는 메일로 알려요.</p>' : '')) +
           '<p class="actions"><button class="btn" type="submit">제재하기</button></p></form>';
       }
       html += '</article>';
@@ -382,11 +415,33 @@
         ev.preventDefault();
         var label = KINDS[f.kind.value];
         var name = r.people[Number(f.dataset.i)].nickname;
-        if (!window.confirm(name + '님을 ' + label + ' 처리할까요?')) return;
+        var withGuardian = !!(f.guardian && f.guardian.checked);
+        if (!window.confirm(name + '님을 ' + label + ' 처리할까요?' + (withGuardian ? ' 보호자 계정도 함께 제재해요.' : ''))) return;
         var ok = await rpc('admin_sanction', {
-          p_user: f.dataset.user, p_kind: f.kind.value, p_reason: f.reason.value, p_report: id,
+          p_user: f.dataset.user, p_kind: f.kind.value, p_reason: f.reason.value, p_report: id, p_guardian: withGuardian,
         }).catch(function () { return false; });
         if (ok) adminDetail(root, id); else fail();
+      };
+    });
+    root.querySelectorAll('form[data-clear]').forEach(function (f) {
+      f.onsubmit = async function (ev) {
+        ev.preventDefault();
+        var parts = [];
+        f.querySelectorAll('input:checked').forEach(function (c) { parts.push(c.value); });
+        if (!parts.length) { say($('#admin-msg'), '내릴 항목을 골라 주세요.', true); return; }
+        if (!window.confirm('고른 항목을 내릴까요? 지운 사진은 되살릴 수 없어요.')) return;
+        var uid = f.dataset.clear;
+        var paths = [];
+        if (parts.indexOf('photo') >= 0) paths.push(uid + '/avatar', uid + '/full');
+        if (parts.indexOf('cover') >= 0) paths.push(uid + '/cover');
+        try {
+          if (paths.length) {
+            var del = await db.storage.from('avatars').remove(paths);
+            if (del.error) throw del.error;
+          }
+          var ok = await rpc('admin_clear_profile', { p_user: uid, p_parts: parts, p_report: id });
+          if (ok) adminDetail(root, id); else fail();
+        } catch (e) { fail(); }
       };
     });
     root.querySelectorAll('[data-lift]').forEach(function (b) {

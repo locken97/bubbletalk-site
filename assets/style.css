@@ -274,3 +274,4 @@ footer p { margin: 4px 0; }
 .notice { margin: 0; padding: 10px 14px; border-radius: 12px; background: var(--notice); }
 .notice.bad { background: var(--coral); border: 1px solid var(--coral-b); }
 .doc .list { padding: 0; }
+.admin-photo { display: block; max-width: 200px; max-height: 200px; border-radius: 12px; border: 1px solid var(--line); }
