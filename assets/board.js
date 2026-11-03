@@ -397,6 +397,7 @@
           '<label>사유 (본인에게 보여요, 200자까지)<input name="reason" maxlength="200" value="' + esc(r.reason) + '" required></label>' +
           (p.guardian ? '<label class="check"><input type="checkbox" name="guardian"> 보호자 계정도 함께 제재 (' + who(p.guardian) + ')</label>'
             : (p.under14 ? '<p class="hint">보호자 계정은 없어요. 보호자에게는 메일로 알려요.</p>' : '')) +
+          (p.under14 ? '' : '<label class="check"><input type="checkbox" name="blockmail"> 이 메일의 신규 가입 막기 (탈퇴해도 다시 가입 못 해요)</label>') +
           '<p class="actions"><button class="btn" type="submit">제재하기</button></p></form>';
       }
       html += '</article>';
@@ -420,6 +421,9 @@
         var ok = await rpc('admin_sanction', {
           p_user: f.dataset.user, p_kind: f.kind.value, p_reason: f.reason.value, p_report: id, p_guardian: withGuardian,
         }).catch(function () { return false; });
+        if (ok && f.blockmail && f.blockmail.checked) {
+          ok = await rpc('admin_block_email', { p_user: f.dataset.user }).catch(function () { return false; });
+        }
         if (ok) adminDetail(root, id); else fail();
       };
     });

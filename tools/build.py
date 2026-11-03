@@ -235,8 +235,10 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 
 <h2>5. 대화 내용의 처리</h2>
 <ul>
-<li>운영자는 대화 내용을 서버에 저장하거나 백업하지 않으며, 광고·추천·분석에 쓰지 않습니다.</li>
-<li>1:1 대화의 버블은 보내는 회원의 휴대폰에서 암호화(종단간 암호화)되어 받는 회원의 휴대폰에서만 열 수 있습니다. 상대 화면에 띄워질 때까지만 암호화된 상태로 서버에 잠시 머물고, 띄워지면 바로 지워집니다. 띄워지지 않은 버블은 24시간 뒤 자동으로 지워집니다.</li>
+<li>운영자는 일반 대화 내용을 읽을 수 있는 형태로 서버에 저장하거나 백업하지 않으며, 광고·추천·분석에 쓰지 않습니다.</li>
+<li>1:1 대화와 단체방의 버블, 띠, 핀버블은 보내는 회원의 휴대폰에서 암호화(종단간 암호화)되어 그 대화의 회원 휴대폰에서만 열 수 있습니다.</li>
+<li>1:1 버블은 상대 화면에 띄워질 때까지, 단체방 버블은 수명이 끝날 때까지 암호화된 상태로 서버에 머뭅니다. 아무도 보지 않은 버블은 24시간 뒤 지워지고, 띠와 핀버블은 게시되어 있는 동안 머뭅니다.</li>
+<li>수명이 남은 1:1 버블은 앱을 다시 열 때 보여 주기 위해 휴대폰에 암호화되어 잠시 보관됩니다.</li>
 <li>회원이 신고할 때 직접 첨부한 버블과 신고 사유는 신고 처리를 위해 저장됩니다.</li>
 <li>퀴즈의 문제·정답·답은 서버가 채점해야 하므로 종단간 암호화하지 않고 서버에 저장됩니다(위 4번의 기간 동안).</li>
 </ul>
@@ -250,12 +252,13 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 {body_html(gs['보호자의 권리'])}
 
 <h2>7. 처리 위탁과 국외 이전</h2>
-<p>서비스 제공을 위해 다음 업체에 개인정보 처리를 맡기고 있습니다. 이전 국가·이전 일시·연락처 등 세부 내용은 법률 검토를 거쳐 정식 출시 전에 보완합니다.</p>
+<p>서비스 제공을 위해 다음 업체에 개인정보 처리를 맡기며, 일부는 국외로 이전됩니다. 국외 이전은 계약 이행에 필요한 처리위탁·보관으로서 「개인정보 보호법」 제28조의8 제1항 제3호 가목에 따라 이 처리방침에 공개합니다.</p>
 <table class="plain">
-<tr><th>Supabase</th><td>회원 정보·친구·대화방 정보를 저장하는 서버와 데이터베이스 (서울 지역 서버)</td></tr>
-<tr><th>Google Firebase</th><td>휴대폰 알림 전송. 알림에는 버블 내용 없이 방 번호와 보낸 사람 닉네임만 담깁니다.</td></tr>
-<tr><th>Google Gmail</th><td>가입 확인 코드, 비밀번호 찾기, 보호자 동의 메일 보내기와 받기</td></tr>
+<tr><th>Supabase Pte. Ltd.(싱가포르), Supabase, Inc.(미국)</th><td><b>맡기는 일:</b> 회원 정보·친구·대화방 정보·프로필 사진 저장<br><b>이전 항목:</b> 위 1번의 서비스 정보<br><b>국가:</b> 저장은 대한민국 서울. 기술 지원·운영에 필요할 때 싱가포르·미국 등에서 접근할 수 있고, 프로필 사진은 전 세계 전송망을 거칠 수 있습니다<br><b>연락처:</b> supabase.com/contact-us</td></tr>
+<tr><th>Google LLC(미국) Firebase</th><td><b>맡기는 일:</b> 휴대폰 알림 전송, 앱 오류 수집<br><b>이전 항목:</b> 알림 열쇠, 방 번호, 보낸 사람 닉네임, 앱 오류 정보(버블 내용 없음)<br><b>국가:</b> 미국 등 구글 서버 소재지<br><b>연락처:</b> support.google.com/policies/contact/general_privacy_form</td></tr>
+<tr><th>Google LLC(미국) Gmail</th><td><b>맡기는 일:</b> 가입 확인 코드, 비밀번호 찾기, 보호자 동의·안내 메일 보내기와 받기<br><b>이전 항목:</b> 이메일, 메일 내용, 보호자 이름<br><b>국가:</b> 미국 등 구글 서버 소재지<br><b>연락처:</b> support.google.com/policies/contact/general_privacy_form</td></tr>
 </table>
+<p>이전 시기와 방법은 서비스를 쓰는 동안 네트워크로 전송하는 것입니다. 보유 기간은 위 4번과 같거나 위탁 계약이 끝날 때까지입니다. 국외 이전을 거부하려면 탈퇴하면 되고, 거부하면 서비스를 쓸 수 없습니다.</p>
 
 <h2>8. 정보주체의 권리와 행사 방법</h2>
 <p>회원(만 14세 미만은 보호자)은 언제든 개인정보 열람, 정정, 삭제, 처리 정지를 요청하고 동의를 철회할 수 있습니다.
@@ -265,7 +268,7 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 <h2>9. 안전성 확보 조치</h2>
 <ul>
 <li>비밀번호는 원래 글자를 알 수 없는 방식으로 암호화하여 저장합니다.</li>
-<li>1:1 대화는 종단간 암호화하며, 대화 암호화용 비밀 열쇠는 회원의 휴대폰에만 있습니다.</li>
+<li>1:1 대화와 단체방은 종단간 암호화하며, 대화 암호화용 비밀 열쇠는 회원의 휴대폰에만 있습니다.</li>
 <li>서버의 개인정보에는 꼭 필요한 기능만 접근할 수 있도록 권한을 나눠 둡니다.</li>
 <li>휴대폰에 보관한 버블은 휴대폰의 보안 저장소에 암호화하여 저장합니다.</li>
 </ul>
@@ -323,7 +326,7 @@ delete_main = f'''<article class="doc"><div class="wrap">
 <li>신고 자료(신고에 첨부된 버블과 사유): 처리를 마친 뒤 90일 보관 후 삭제해요.</li>
 <li>법령에서 보관하도록 정한 정보는 정해진 기간 동안 보관해요.</li>
 </ul></td></tr>
-<tr><th>원래 없는 것</th><td>대화 내용은 서버에 저장하지 않아서 지울 것도 남는 것도 없어요. 휴대폰 보관함에 담은 버블은 앱을 지우면 함께 지워져요.</td></tr>
+<tr><th>원래 없는 것</th><td>일반 대화 내용은 운영자가 읽을 수 없고 수명이 끝나면 사라져서, 따로 지울 것이 남지 않아요.</td></tr>
 </table>
 </div></article>'''
 
@@ -399,7 +402,7 @@ safety_main = f'''<article class="doc"><div class="wrap">
 <h2 lang="en">Child Safety Standards (English)</h2>
 <div lang="en">
 <p>Bubble Talk, operated by Maison de Moi, prohibits child sexual abuse and exploitation (CSAE) and child sexual abuse material (CSAM) in any form, including grooming and threats against children.</p>
-<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Guardians approve new friends for those accounts.</p>
+<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Guardians are told by email when those accounts make a new friend, and can remove that friend, require approval for new friends, or turn chat off. Users under 14 cannot join group rooms by link, and rooms with a child cannot use invite links.</p>
 <p>Users can report bubbles and profiles inside the app. We review reports and warn, suspend, or permanently ban violators. We remove CSAM when we learn of it and report to law enforcement and relevant authorities as required by law.</p>
 <p>Child safety contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 </div>
