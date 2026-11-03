@@ -394,6 +394,7 @@
           '<label>제재 단계<select name="kind">' + Object.keys(KINDS).map(function (k) {
             return '<option value="' + k + '"' + (k === next ? ' selected' : '') + '>' + KINDS[k] + '</option>';
           }).join('') + '</select></label>' +
+          '<p class="hint">신고 한 건만 있으면 경고까지 줘요. 정지는 서로 다른 사람의 신고 등 근거가 여럿일 때만, 아이에 대한 성적 접근은 안전을 위해 바로 정지해요.</p>' +
           '<label>사유 (본인에게 보여요, 200자까지)<input name="reason" maxlength="200" value="' + esc(r.reason) + '" required></label>' +
           (p.guardian ? '<label class="check"><input type="checkbox" name="guardian"> 보호자 계정도 함께 제재 (' + who(p.guardian) + ')</label>'
             : (p.under14 ? '<p class="hint">보호자 계정은 없어요. 보호자에게는 메일로 알려요.</p>' : '')) +
