@@ -39,7 +39,7 @@
 <script>
 (function () {
   var seg = location.pathname.split('/').filter(Boolean);
-  if (seg.length !== 2 || (seg[0] !== 'i' && seg[0] !== 'r')) return;
+  if (seg.length > 2 || (seg[0] !== 'i' && seg[0] !== 'r')) return;
   var room = seg[0] === 'r';
   document.title = (room ? '단체방 초대' : '친구 초대') + ' · 버블톡';
   document.querySelector('.cta h2').textContent = room ? '버블톡 단체방에 초대받았어요' : '버블톡 친구 초대를 받았어요';
