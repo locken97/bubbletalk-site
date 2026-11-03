@@ -54,7 +54,7 @@ def body_html(text):
     return '\n'.join(out)
 
 
-NAV = [('index.html', '소개'), ('notice.html', '공지사항'), ('inquiry.html', '문의하기')]
+NAV = [('index.html', '소개'), ('guardian.html', '보호자 안내'), ('faq.html', '자주 묻는 질문'), ('notice.html', '공지사항'), ('inquiry.html', '문의하기')]
 
 
 def page(filename, title, desc, main, extra_head=''):
@@ -103,6 +103,8 @@ def page(filename, title, desc, main, extra_head=''):
       <p>© 2026 버블톡. All rights reserved.</p>
     </div>
     <div class="links">
+      <a href="guardian.html">보호자 안내</a>
+      <a href="faq.html">자주 묻는 질문</a>
       <a href="notice.html">공지사항</a>
       <a href="inquiry.html">문의하기</a>
       <a href="terms.html">이용약관</a>
@@ -124,10 +126,10 @@ index_main = '''<section class="hero">
     <div>
       <h1>말하고, 보고,<br><em>퐁!</em> 사라지는 대화</h1>
       <p class="lead">버블톡은 말풍선(버블)이 정해진 시간만 떠 있다가 퐁 하고 사라지는 메신저예요.
-        쌓이는 기록 대신 지금 나누는 대화에 집중해요. 사진도 링크도 없어서 아이도 안심하고 써요.</p>
+        쌓이는 기록 대신 지금 나누는 대화에 집중해요. 대화로는 글과 이모티콘만 주고받아요.</p>
       <div class="badges">
         <span class="soon">곧 만나요 · 안드로이드 먼저</span>
-        <a class="ghost" href="#safe">안심하고 쓰는 이유</a>
+        <a class="ghost" href="guardian.html">보호자 안내</a>
       </div>
     </div>
     <div class="chat" aria-label="버블톡 대화 예시">
@@ -148,9 +150,9 @@ index_main = '''<section class="hero">
     <div class="grid">
       <div class="card c-sky"><div class="dot">🫧</div><h3>사라지는 버블</h3>
         <p>버블은 방마다 정한 시간(30초~24시간)만 떠 있다가 퐁 하고 사라져요. 간직하고 싶은 버블만 길게 눌러 내 휴대폰에 보관해요.</p></div>
-      <div class="card c-me"><div class="dot">🔒</div><h3>대화는 서버에 안 남아요</h3>
-        <p>1:1 대화는 종단간 암호화로 받는 사람 휴대폰에서만 열려요. 운영자도 대화 내용을 볼 수 없고, 서버에 저장하지 않아요.</p></div>
-      <div class="card c-mint"><div class="dot">🧒</div><h3>아이도 안심</h3>
+      <div class="card c-me"><div class="dot">🔒</div><h3>운영자도 못 읽는 대화</h3>
+        <p>1:1 대화와 단체방은 종단간 암호화되어 대화 상대의 휴대폰에서만 열려요. 신고에 첨부한 버블과 퀴즈 답만 처리를 위해 서버에 저장돼요.</p></div>
+      <div class="card c-mint"><div class="dot">🧒</div><h3>보호자와 함께</h3>
         <p>사진·파일은 보낼 수 없고 링크는 눌러도 열리지 않아요. 만 14세 미만은 보호자 동의를 받아야 쓸 수 있어요.</p></div>
       <div class="card c-coral"><div class="dot">📌</div><h3>공지는 남고, 잡담은 사라지는 단체방</h3>
         <p>방장이 거는 띠와 핀버블로 꼭 필요한 공지는 남기고, 나머지 대화는 가볍게 흘려보내요.</p></div>
@@ -164,10 +166,10 @@ index_main = '''<section class="hero">
 
 <section class="block" id="safe">
   <div class="wrap">
-    <h2>안심하고 쓰는 이유</h2>
-    <p class="sub">아이에게 처음 쥐여 주는 메신저가 될 수 있도록 만들었어요.</p>
+    <h2>안전을 위해 만든 것들</h2>
+    <p class="sub">아이에게 처음 쥐여 주는 메신저가 될 수 있도록 만들고 있어요. 자세한 내용은 <a href="guardian.html">보호자 안내</a>에서 볼 수 있어요.</p>
     <ul class="promise">
-      <li>대화 내용을 서버에 저장하거나 광고·분석에 쓰지 않아요.</li>
+      <li>일반 대화 내용은 운영자가 읽을 수 없고, 광고·분석에 쓰지 않아요.</li>
       <li>전화번호와 실명을 받지 않아요. 주소록은 읽지 않고, 초대할 사람만 직접 골라요.</li>
       <li>사진·이미지·파일 보내기가 없어요. 링크는 글자로만 보여요.</li>
       <li>만 14세 미만은 보호자 동의로 계정이 열리고, 새 친구가 생기면 보호자에게 알려요.</li>
@@ -353,6 +355,96 @@ notfound_main = '''<section class="block cta"><div class="wrap">
 })();
 </script>'''
 
+guardian_main = '''<article class="doc"><div class="wrap">
+<h1>보호자 안내</h1>
+<p class="meta">만 14세 미만 아이가 버블톡을 쓸 때 알아 두실 내용이에요.</p>
+<div class="summary">버블톡은 대화 내용을 보호자에게 보여 주지 않아요. 대신 가입 동의, 새 친구 안내, 대화 기능 끄기로 함께 지켜봐 주실 수 있어요.</div>
+
+<h2>가입 방법</h2>
+<ol>
+<li>아이 휴대폰에서 가입을 시작하고 생년월일을 넣어요. 버블톡은 만 7세부터 쓸 수 있어요.</li>
+<li>보호자 이메일을 적으면 동의 메일이 가요. 스팸함도 확인해 주세요.</li>
+<li>메일을 읽고 <strong>동의</strong>라고 답장해 주세요. 그때부터 아이 계정을 쓸 수 있어요.</li>
+<li>5일 안에 답장이 없으면 아이 계정과 받은 정보를 지워요.</li>
+</ol>
+
+<h2>보호자가 할 수 있는 것</h2>
+<p>동의 메일을 받은 이메일로 버블톡에 가입하면, 앱의 <strong>내 아이 계정</strong> 화면을 쓸 수 있어요.</p>
+<table class="plain">
+<tr><th>새 친구 확인</th><td>아이에게 새 친구가 생기면 메일로 상대의 닉네임과 아이디를 알려 드려요. 모르는 사람이면 메일에 <strong>끊기</strong>라고 답장하거나 앱에서 끊을 수 있어요. 상대에게는 알리지 않아요.</td></tr>
+<tr><th>친구 추가 승인</th><td>켜면 보호자가 승인한 뒤에만 친구가 돼요. 기본은 꺼짐이에요.</td></tr>
+<tr><th>대화 기능 끄기</th><td>끄면 아이는 버블을 보내거나 받지 못하고 친구도 추가할 수 없어요.</td></tr>
+<tr><th>계정 관리</th><td>만 14세가 되는 날을 확인하고, 아이 계정 탈퇴를 신청할 수 있어요.</td></tr>
+</table>
+
+<h2>보호자도 볼 수 없는 것</h2>
+<ul>
+<li>아이의 대화 내용</li>
+<li>전체 친구 목록 (최근 30일 안에 생긴 새 친구만 보여요)</li>
+</ul>
+
+<h2>아이를 위해 정해 둔 것</h2>
+<ul>
+<li>대화로 사진과 파일을 보낼 수 없어요. 링크는 글자로만 보이고 눌러도 열리지 않아요.</li>
+<li>아이는 단체방 초대 링크로 들어갈 수 없고, 아이가 있는 방은 초대 링크를 쓸 수 없어요.</li>
+<li>첫 대화 전에 온라인 안전 안내를 보여 줘요.</li>
+<li>밤 10시부터 아침 7시까지는 방해 금지 시간이 기본으로 켜져 있어요.</li>
+<li>전화번호처럼 보이는 내용을 쓰면 보내기 전에 알려 줘요.</li>
+<li>낯선 사람을 추천하거나 무작위로 연결하지 않아요.</li>
+</ul>
+
+<h2>꼭 알아 두세요</h2>
+<ul>
+<li>가입할 때 나이는 입력한 생년월일로 확인해요. 신분증이나 휴대폰 인증은 하지 않아서, 어른이 아이인 척할 수 있어요.</li>
+<li>새 친구는 기본으로 보호자 승인 없이 맺어지고, 나중에 메일로 알려 드려요. 미리 확인하고 싶으면 친구 추가 승인을 켜 주세요.</li>
+<li>대화 상대가 화면을 캡처하거나 내용을 적어 둘 수 있어요.</li>
+</ul>
+
+<h2>아이와 함께 이야기해 주세요</h2>
+<ul>
+<li>모르는 사람의 친구 요청은 받지 않기</li>
+<li>집 주소, 학교, 전화번호, 사진을 다른 앱으로 보내 달라는 말에 응하지 않기</li>
+<li>불편한 대화는 바로 신고하고 어른에게 말하기</li>
+</ul>
+
+<h2>문제가 생겼을 때</h2>
+<p>앱에서 버블이나 프로필을 신고해 주세요. 신고한 사람은 상대에게 알리지 않아요. <a href="child-safety.html">아동 안전 표준</a>도 함께 볼 수 있고, 보호자 문의는 <a href="inquiry.html">문의하기</a>나 <a href="mailto:{EMAIL}">{EMAIL}</a>으로 보내 주세요.</p>
+<p><strong>아이가 지금 위험하다면 112에 바로 신고해 주세요.</strong></p>
+</div></article>'''.replace('{EMAIL}', EMAIL)
+
+FAQ = [
+    ('버블톡', [
+        ('버블톡은 어떤 앱인가요?', '말풍선(버블)이 정해진 시간만 떠 있다가 사라지는 메신저예요. 글과 이모티콘으로 대화해요.'),
+        ('무료인가요?', '지금은 무료예요. 바뀌는 내용이 있으면 공지사항으로 미리 알려 드릴게요.'),
+        ('어디서 받을 수 있나요?', '지금은 출시 준비 중이에요. 안드로이드를 먼저 준비하고 있고, 아이폰 출시 일정은 아직 정해지지 않았어요.'),
+    ]),
+    ('대화', [
+        ('버블은 언제 사라지나요?', '방마다 정한 수명이 지나면 사라져요. 수명은 30초부터 24시간까지 고를 수 있고, 새 방은 1분으로 시작해요. 다른 사람이 화면에서 본 때부터 수명이 시작돼요.'),
+        ('사라진 버블을 되살릴 수 있나요?', '아니요, 운영자도 되살릴 수 없어요. 간직하고 싶은 버블은 사라지기 전에 보관함에 담아 주세요. 보관함은 내 휴대폰에만 있고, 휴대폰을 바꾸면 옮겨지지 않아요.'),
+        ('운영자가 대화를 볼 수 있나요?', '일반 대화는 종단간 암호화되어 볼 수 없어요. 신고할 때 첨부한 버블은 처리를 위해 운영자에게 전달되고, 퀴즈의 문제와 답은 채점을 위해 서버에서 처리돼요.'),
+        ('화면 캡처를 막아 주나요?', '막지 않고, 캡처했다는 알림도 없어요. 개인정보나 비밀번호는 대화로 보내지 마세요.'),
+        ('사진을 보낼 수 있나요?', '대화로는 보낼 수 없어요. 프로필 사진과 배경 사진만 올릴 수 있고, 친구에게만 보여요.'),
+    ]),
+    ('친구와 단체방', [
+        ('전화번호가 없어도 친구가 될 수 있나요?', '네. 아이디 찾기, QR, 초대 링크로 친구가 될 수 있어요. 전화번호는 받지 않아요.'),
+        ('단체방에는 몇 명까지 들어갈 수 있나요?', '100명까지예요. 방장은 띠와 핀버블로 공지를 남길 수 있어요.'),
+        ('단체방 초대 링크는 어떻게 쓰나요?', '방 설정에서 만들고 24시간 동안 쓸 수 있어요. 만 14세 미만은 링크로 들어갈 수 없고, 아이가 있는 방은 링크를 쓸 수 없어요.'),
+        ('퀴즈방은 무엇인가요?', '방장이 문제를 내고 모두 함께 푸는 방이에요. 기본 문제나 직접 만든 문제로 객관식, 주관식, 스피드 퀴즈를 할 수 있어요.'),
+    ]),
+    ('계정과 안전', [
+        ('몇 살부터 쓸 수 있나요?', '만 7세부터 쓸 수 있어요. 만 14세 미만은 보호자 동의가 필요해요. 자세한 내용은 보호자 안내를 봐 주세요.'),
+        ('생년월일을 잘못 넣었어요.', '앱에서는 바꿀 수 없어요. 문의하기로 알려 주시면 확인해 드려요.'),
+        ('불쾌한 대화를 받았어요.', '앱에서 그 버블이나 프로필을 신고하고 상대를 차단해 주세요. 신고한 사람은 상대에게 알리지 않아요.'),
+        ('탈퇴하면 어떻게 되나요?', '신청하고 7일 뒤 계정이 삭제되고, 7일 안에 다시 로그인하면 복구돼요. 자세한 내용은 계정 삭제 요청 페이지를 봐 주세요.'),
+    ]),
+]
+faq_main = '<article class="doc"><div class="wrap">\n<h1>자주 묻는 질문</h1>\n'
+for _group, _items in FAQ:
+    faq_main += f'<h2>{html.escape(_group)}</h2>\n'
+    for _q, _a in _items:
+        faq_main += f'<details class="faq"><summary>{html.escape(_q)}</summary><p>{html.escape(_a)}</p></details>\n'
+faq_main += '<p class="meta">찾는 내용이 없으면 <a href="inquiry.html">문의하기</a>로 알려 주세요.</p>\n</div></article>'
+
 BOARD_HEAD = ('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>\n'
               '<script src="assets/board.js"></script>\n')
 
@@ -421,6 +513,8 @@ safety_main = f'''<article class="doc"><div class="wrap">
 (OUT / '404.html').write_text(
     re.sub(r'(href|src)="(?!https?:|mailto:|#|/)', r'\1="/', page('404.html', '페이지 없음', DESC, notfound_main)),
     encoding='utf-8')
+(OUT / 'guardian.html').write_text(page('guardian.html', '보호자 안내', '만 14세 미만 아이가 버블톡을 쓸 때 보호자가 알아 둘 내용', guardian_main), encoding='utf-8')
+(OUT / 'faq.html').write_text(page('faq.html', '자주 묻는 질문', '버블톡 자주 묻는 질문', faq_main), encoding='utf-8')
 (OUT / 'notice.html').write_text(page('notice.html', '공지사항', '버블톡 공지사항',
     board('공지사항', '버블톡 소식과 업데이트, 점검 안내', 'notice'), BOARD_HEAD), encoding='utf-8')
 (OUT / 'inquiry.html').write_text(page('inquiry.html', '문의하기', '버블톡 문의하기',

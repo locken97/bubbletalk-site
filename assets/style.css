@@ -275,3 +275,17 @@ footer p { margin: 4px 0; }
 .notice.bad { background: var(--coral); border: 1px solid var(--coral-b); }
 .doc .list { padding: 0; }
 .admin-photo { display: block; max-width: 200px; max-height: 200px; border-radius: 12px; border: 1px solid var(--line); }
+
+/* ── 자주 묻는 질문 ── */
+.faq { background: var(--card); border: 1px solid var(--line); border-radius: 16px; margin: 8px 0; padding: 0 16px; }
+.faq summary { cursor: pointer; font-weight: 600; padding: 12px 0; }
+.faq summary:focus-visible { outline: 2px solid var(--sky-deep); outline-offset: 2px; border-radius: 8px; }
+.faq p { margin: 0 0 14px; }
+
+/* 좁은 화면: 메뉴를 한 줄로 두고 옆으로 밀기 */
+@media (max-width: 600px) {
+  .top .wrap { flex-wrap: wrap; }
+  .nav { width: 100%; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; flex: none; }
+}
