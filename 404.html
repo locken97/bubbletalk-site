@@ -34,8 +34,25 @@
 <section class="block cta"><div class="wrap">
 <h2>퐁! 이 페이지는 사라졌어요</h2>
 <p class="sub">찾는 페이지가 없거나 주소가 바뀌었어요.</p>
-<a class="ghost" href="/index.html">첫 화면으로</a>
+<a class="ghost" id="open-app" href="/index.html">첫 화면으로</a>
 </div></section>
+<script>
+(function () {
+  var seg = location.pathname.split('/').filter(Boolean);
+  if (seg.length !== 2 || (seg[0] !== 'i' && seg[0] !== 'r')) return;
+  var room = seg[0] === 'r';
+  document.title = (room ? '단체방 초대' : '친구 초대') + ' · 버블톡';
+  document.querySelector('.cta h2').textContent = room ? '버블톡 단체방에 초대받았어요' : '버블톡 친구 초대를 받았어요';
+  document.querySelector('.cta .sub').textContent = room
+    ? '앱이 있으면 아래 버튼으로 열어 주세요. 링크는 24시간 동안 쓸 수 있고, 만 14세 미만은 링크로 들어갈 수 없어요. 버블톡은 지금 출시 준비 중이에요.'
+    : '앱이 있으면 아래 버튼으로 열어 주세요. 버블톡은 지금 출시 준비 중이에요.';
+  var btn = document.getElementById('open-app');
+  btn.textContent = '버블톡 앱에서 열기';
+  btn.href = /Android/i.test(navigator.userAgent)
+    ? 'intent://bubbletalk.kr' + location.pathname + location.search + '#Intent;scheme=https;package=kr.bubbletalk.app;end'
+    : 'index.html';
+})();
+</script>
 </main>
 <footer>
   <div class="wrap">

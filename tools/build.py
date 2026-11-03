@@ -170,7 +170,7 @@ index_main = '''<section class="hero">
       <li>대화 내용을 서버에 저장하거나 광고·분석에 쓰지 않아요.</li>
       <li>전화번호와 실명을 받지 않아요. 주소록은 읽지 않고, 초대할 사람만 직접 골라요.</li>
       <li>사진·이미지·파일 보내기가 없어요. 링크는 글자로만 보여요.</li>
-      <li>만 14세 미만은 보호자 동의로 계정이 열리고, 새 친구도 보호자가 승인해요.</li>
+      <li>만 14세 미만은 보호자 동의로 계정이 열리고, 새 친구가 생기면 보호자에게 알려요.</li>
       <li>버블·프로필을 신고할 수 있고, 신고한 사람은 상대에게 알리지 않아요.</li>
       <li>전화번호·계좌번호처럼 보이는 내용을 쓰면 보내기 전에 알려 줘요.</li>
     </ul>
@@ -330,8 +330,25 @@ delete_main = f'''<article class="doc"><div class="wrap">
 notfound_main = '''<section class="block cta"><div class="wrap">
 <h2>퐁! 이 페이지는 사라졌어요</h2>
 <p class="sub">찾는 페이지가 없거나 주소가 바뀌었어요.</p>
-<a class="ghost" href="index.html">첫 화면으로</a>
-</div></section>'''
+<a class="ghost" id="open-app" href="index.html">첫 화면으로</a>
+</div></section>
+<script>
+(function () {
+  var seg = location.pathname.split('/').filter(Boolean);
+  if (seg.length !== 2 || (seg[0] !== 'i' && seg[0] !== 'r')) return;
+  var room = seg[0] === 'r';
+  document.title = (room ? '단체방 초대' : '친구 초대') + ' · 버블톡';
+  document.querySelector('.cta h2').textContent = room ? '버블톡 단체방에 초대받았어요' : '버블톡 친구 초대를 받았어요';
+  document.querySelector('.cta .sub').textContent = room
+    ? '앱이 있으면 아래 버튼으로 열어 주세요. 링크는 24시간 동안 쓸 수 있고, 만 14세 미만은 링크로 들어갈 수 없어요. 버블톡은 지금 출시 준비 중이에요.'
+    : '앱이 있으면 아래 버튼으로 열어 주세요. 버블톡은 지금 출시 준비 중이에요.';
+  var btn = document.getElementById('open-app');
+  btn.textContent = '버블톡 앱에서 열기';
+  btn.href = /Android/i.test(navigator.userAgent)
+    ? 'intent://bubbletalk.kr' + location.pathname + location.search + '#Intent;scheme=https;package=kr.bubbletalk.app;end'
+    : 'index.html';
+})();
+</script>'''
 
 BOARD_HEAD = ('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>\n'
               '<script src="assets/board.js"></script>\n')
@@ -364,7 +381,8 @@ safety_main = f'''<article class="doc"><div class="wrap">
 <li>대화로 사진·이미지·파일을 보낼 수 없어요. 링크는 글자로만 보이고 눌러도 열리지 않아요.</li>
 <li>낯선 사람을 추천하거나 무작위로 연결하지 않아요.</li>
 <li>만 14세 미만은 보호자 동의가 있어야 계정이 열려요.</li>
-<li>만 14세 미만의 새 친구는 보호자가 승인해야 맺어지고, 보호자는 대화 기능을 끌 수 있어요.</li>
+<li>만 14세 미만에게 새 친구가 생기면 보호자에게 메일로 알리고, 보호자는 그 친구를 끊거나 친구 추가 승인을 켤 수 있어요. 대화 기능도 끌 수 있어요.</li>
+<li>만 14세 미만은 단체방 초대 링크로 들어갈 수 없고, 아이가 있는 단체방은 링크를 쓸 수 없어요.</li>
 <li>아이가 처음 대화하기 전에 안전 안내를 보여 줘요.</li>
 <li>전화번호처럼 보이는 내용을 쓰면 보내기 전에 경고해요.</li>
 </ul>
