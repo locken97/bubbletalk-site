@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "kr.bubbletalk.app",
+      "sha256_cert_fingerprints": [
+        "4D:76:6B:33:FA:C8:45:3E:31:8A:73:DB:E7:8F:CA:2E:8D:B1:C7:93:54:3D:DD:05:08:37:7F:95:55:FD:3B:E1"
+      ]
+    }
+  }
+]
