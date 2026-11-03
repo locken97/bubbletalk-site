@@ -373,6 +373,7 @@ guardian_main = '''<article class="doc"><div class="wrap">
 <table class="plain">
 <tr><th>어른과 친구 맺기</th><td>아이가 만 14세 이상과 친구가 되려면 보호자 승인이 필요해요. 메일이나 앱에서 상대의 닉네임과 아이디를 보고 정해요. 보호자 계정과 내 아이는 승인 없이 바로 친구가 돼요.</td></tr>
 <tr><th>아이끼리 새 친구</th><td>승인 없이 바로 친구가 되고 메일로 알려 드려요. 모르는 사람이면 메일에 <strong>끊기</strong>라고 답장하거나 앱에서 끊을 수 있어요. 상대에게는 알리지 않아요.</td></tr>
+<tr><th>단체방 입장 승인</th><td>초대받은 방에 아이의 친구가 아닌 어른이 있으면 보호자가 승인해야 들어가요. 메일이나 앱에서 방 이름, 방장, 어른 수를 보고 정해요. 나중에 그런 어른이 방에 들어오면 메일로 알려 드려요.</td></tr>
 <tr><th>친구 추가 승인</th><td>켜면 아이끼리도 보호자가 승인한 뒤에만 친구가 돼요. 기본은 꺼짐이에요.</td></tr>
 <tr><th>대화 기능 끄기</th><td>끄면 아이는 버블을 보내거나 받지 못하고 친구도 추가할 수 없어요.</td></tr>
 <tr><th>알림 끄는 시간</th><td>정한 시간에는 휴대폰 알림만 울리지 않아요. 대화를 막는 기능은 아니에요. 기본은 밤 10시부터 아침 7시까지예요.</td></tr>
@@ -389,6 +390,7 @@ guardian_main = '''<article class="doc"><div class="wrap">
 <ul>
 <li>대화로 사진과 파일을 보낼 수 없어요. 링크는 글자로만 보이고 눌러도 열리지 않아요.</li>
 <li>아이는 단체방 초대 링크로 들어갈 수 없고, 아이가 있는 방은 초대 링크를 쓸 수 없어요.</li>
+<li>모르는 어른이 있는 단체방은 보호자가 승인해야 들어가요.</li>
 <li>첫 대화 전에 온라인 안전 안내를 보여 줘요.</li>
 <li>전화번호처럼 보이는 내용을 쓰면 보내기 전에 알려 줘요.</li>
 <li>낯선 사람을 추천하거나 무작위로 연결하지 않아요.</li>
@@ -495,7 +497,7 @@ safety_main = f'''<article class="doc"><div class="wrap">
 <h2 lang="en">Child Safety Standards (English)</h2>
 <div lang="en">
 <p>Bubble Talk, operated by Maison de Moi, prohibits child sexual abuse and exploitation (CSAE) and child sexual abuse material (CSAM) in any form, including grooming and threats against children.</p>
-<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Those accounts need guardian approval to become friends with users 14 or older. Guardians are told by email when two children become friends, can remove that friend, and can turn chat off. Users under 14 cannot join group rooms by link, and rooms with a child cannot use invite links.</p>
+<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Those accounts need guardian approval to become friends with users 14 or older. Guardians are told by email when two children become friends, can remove that friend, and can turn chat off. Users under 14 cannot join group rooms by link, rooms with a child cannot use invite links, and joining a room with adults they do not know needs guardian approval.</p>
 <p>Users can report bubbles and profiles inside the app. We review reports and warn, suspend, or permanently ban violators. We remove CSAM when we learn of it and report to law enforcement and relevant authorities as required by law.</p>
 <p>Child safety contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 </div>
