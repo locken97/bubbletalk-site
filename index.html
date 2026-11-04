@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>버블톡</title>
-<meta name="description" content="말하고, 보고, 퐁! 사라지는 대화. 아이도 안심하고 쓰는 메신저 버블톡.">
+<meta name="description" content="말하고, 보고, 퐁! 사라지는 대화. 어린이도 안전하게 쓸 수 있는 메신저 버블톡.">
 <meta property="og:title" content="버블톡">
-<meta property="og:description" content="말하고, 보고, 퐁! 사라지는 대화. 아이도 안심하고 쓰는 메신저 버블톡.">
+<meta property="og:description" content="말하고, 보고, 퐁! 사라지는 대화. 어린이도 안전하게 쓸 수 있는 메신저 버블톡.">
 <meta property="og:image" content="https://bubbletalk.kr/assets/icon-256.png">
 <meta property="og:url" content="https://bubbletalk.kr/">
 <meta name="theme-color" content="#8ECDF2">
@@ -38,25 +38,27 @@
   <div class="wrap">
     <div>
       <h1>말하고, 보고,<br><em>퐁!</em> 사라지는 대화</h1>
-      <p class="lead">버블톡은 말풍선(버블)이 정해진 시간만 떠 있다가 퐁 하고 사라지는 메신저예요.
-        쌓이는 기록 대신 지금 나누는 대화에 집중해요. 대화로는 글과 이모티콘만 주고받아요.</p>
+      <p class="scene-line" id="scene-line">점심 메뉴까지 기록으로 남길 필요는 없으니까요.</p>
+      <p class="lead">버블톡은 말풍선이 정해진 시간만 떠 있다가 사라지는 메신저예요.
+        쌓이는 기록 대신, 지금 나누는 대화에 집중할 수 있어요.</p>
       <div class="badges">
-        <span class="soon">곧 만나요 · 안드로이드 먼저</span>
-        <a class="ghost" href="guardian.html">보호자 안내</a>
+        <span class="soon">구글 플레이 출시 준비 중</span>
+        <a class="ghost" href="#features">어떻게 다른가요</a>
       </div>
     </div>
     <div class="chat" aria-label="버블톡 대화 예시">
-      <div class="room">우리 반 수다방<small>4명 · 버블 수명 1분</small></div>
+      <div class="room"><span id="room-name">3팀 점심</span><small id="room-meta">6명 · 버블 수명 10분</small></div>
+      <div class="strip" id="room-strip" hidden></div>
       <div class="lines">
-        <div class="b them">오늘 숙제 뭐였지?</div>
-        <div class="b mine">수학 익힘책 24쪽!</div>
-        <div class="b them2">나도 지금 하는 중 ㅋㅋ</div>
+        <div class="b them">오늘 12시 반에 내려갈게요</div>
+        <div class="b mine">저는 10분만 늦을 것 같아요</div>
+        <div class="b them2">먼저 가서 자리 잡아 둘게요</div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="block alt">
+<section class="block alt" id="features">
   <div class="wrap">
     <h2>버블톡은 이렇게 달라요</h2>
     <p class="sub">기록을 남기는 메신저가 아니라, 대화하는 순간을 위한 메신저예요.</p>
@@ -65,8 +67,8 @@
         <p>버블은 방마다 정한 시간(30초~24시간)만 떠 있다가 퐁 하고 사라져요. 간직하고 싶은 버블만 길게 눌러 내 휴대폰에 보관해요.</p></div>
       <div class="card c-me"><div class="dot">🔒</div><h3>운영자도 못 읽는 대화</h3>
         <p>1:1 대화와 단체방은 종단간 암호화되어 대화 상대의 휴대폰에서만 열려요. 신고에 첨부한 버블과 퀴즈 답만 처리를 위해 서버에 저장돼요.</p></div>
-      <div class="card c-mint"><div class="dot">🧒</div><h3>보호자와 함께</h3>
-        <p>사진·파일은 보낼 수 없고 링크는 눌러도 열리지 않아요. 만 14세 미만은 보호자 동의를 받아야 쓸 수 있어요.</p></div>
+      <div class="card c-mint"><div class="dot">✉️</div><h3>메일 하나로 가볍게</h3>
+        <p>전화번호도 실명도 묻지 않아요. 메일로 가입하고, 아이디를 알려 주거나 초대 링크를 보내 친구를 맺어요.</p></div>
       <div class="card c-coral"><div class="dot">📌</div><h3>공지는 남고, 잡담은 사라지는 단체방</h3>
         <p>방장이 거는 띠와 핀버블로 꼭 필요한 공지는 남기고, 나머지 대화는 가볍게 흘려보내요.</p></div>
       <div class="card c-amber"><div class="dot">❓</div><h3>퀴즈방</h3>
@@ -79,12 +81,12 @@
 
 <section class="block" id="safe">
   <div class="wrap">
-    <h2>안전을 위해 만든 것들</h2>
+    <h2>어린이도 안전하게 쓸 수 있도록</h2>
     <p class="sub">아이에게 처음 쥐여 주는 메신저가 될 수 있도록 만들고 있어요. 자세한 내용은 <a href="guardian.html">보호자 안내</a>에서 볼 수 있어요.</p>
     <ul class="promise">
       <li>일반 대화 내용은 운영자가 읽을 수 없고, 광고·분석에 쓰지 않아요.</li>
       <li>전화번호와 실명을 받지 않아요. 주소록은 읽지 않고, 초대할 사람만 직접 골라요.</li>
-      <li>사진·이미지·파일 보내기가 없어요. 링크는 글자로만 보여요.</li>
+      <li>사진·이미지·파일 보내기가 없어요. 링크는 눌러도 열리지 않고 글자로만 보여요.</li>
       <li>만 14세 미만은 보호자 동의로 계정이 열리고, 어른과 친구가 될 때는 보호자가 승인해요.</li>
       <li>버블·프로필을 신고할 수 있고, 신고한 사람은 상대에게 알리지 않아요.</li>
       <li>전화번호·계좌번호처럼 보이는 내용을 쓰면 보내기 전에 알려 줘요.</li>
