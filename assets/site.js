@@ -1,4 +1,4 @@
-// 첫 화면: 들어올 때마다 예시 장면이 바뀜, 떠다니는 방울을 누르면 퐁 (앱의 퐁 소리 1번)
+// 첫 화면: 들어올 때마다 예시 장면이 바뀜 (대표 문구는 index.html 제목 바로 뒤에서), 떠다니는 방울을 누르면 퐁 (앱의 퐁 소리 1번)
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var audio = null;
@@ -43,35 +43,35 @@
 
   // 예시 장면: 들어올 때마다 하나 (직전 장면은 피함)
   var SCENES = [
-    { room: '3팀 점심', meta: '6명 · 버블 수명 10분', line: '점심 메뉴까지 기록으로 남길 필요는 없으니까요.', talk: [
+    { room: '3팀 점심', meta: '6명 · 버블 수명 10분', talk: [
       ['them', '오늘 12시 반에 내려갈게요'],
       ['mine', '저는 10분만 늦을 것 같아요'],
       ['them2', '먼저 가서 자리 잡아 둘게요'],
       ['mine', '감사합니다 🙏'],
       ['them', '메뉴는 국밥으로 갑니다'],
     ] },
-    { room: '우리 집', meta: '4명 · 버블 수명 1시간', line: '저녁 메뉴는 오늘만 알면 되니까요.', talk: [
+    { room: '우리 집', meta: '4명 · 버블 수명 1시간', talk: [
       ['them', '엄마 저녁 뭐 사 갈까?'],
       ['mine', '두부만 사 와'],
       ['them2', '저는 오늘 조금 늦어요'],
       ['mine', '밥 남겨 둘게'],
       ['them', '네 😊'],
     ] },
-    { room: '주말 러닝', meta: '12명 · 버블 수명 6시간', line: '약속만 잡히면, 나머지는 흘려보내도 괜찮아요.', talk: [
+    { room: '주말 러닝', meta: '12명 · 버블 수명 6시간', talk: [
       ['them', '토요일 7시, 한강에서 봐요'],
       ['mine', '저 참석이요!'],
       ['them2', '비 오면 어떻게 해요?'],
       ['them', '그땐 일요일로 미뤄요'],
       ['mine', '좋아요 🙌'],
     ] },
-    { room: '고등학교 동창', meta: '5명 · 버블 수명 30분', line: '시시콜콜한 얘기일수록 가볍게 나눠야 즐거우니까요.', talk: [
+    { room: '고등학교 동창', meta: '5명 · 버블 수명 30분', talk: [
       ['them', '이번 주말 다들 시간 돼?'],
       ['mine', '토요일 저녁 좋아'],
       ['them2', '나도! 어디서 볼까'],
       ['mine', '지난번 그 집 어때'],
       ['them', 'ㅋㅋㅋ 거기 또?'],
     ] },
-    { room: '2반 학부모', meta: '18명 · 버블 수명 1시간', strip: '내일 현장학습, 도시락 챙겨 주세요', line: '공지는 띠에 남기고, 잡담은 가볍게 흘려보내요.', talk: [
+    { room: '2반 학부모', meta: '18명 · 버블 수명 1시간', strip: '내일 현장학습, 도시락 챙겨 주세요', talk: [
       ['them', '내일 준비물 공지 띠에 걸었어요'],
       ['mine', '감사합니다!'],
       ['them2', '간식도 보내도 되나요?'],
@@ -98,7 +98,6 @@
     clearTimeout(timer);
     document.getElementById('room-name').textContent = scene.room;
     document.getElementById('room-meta').textContent = scene.meta;
-    document.getElementById('scene-line').textContent = scene.line;
     var strip = document.getElementById('room-strip');
     strip.hidden = !scene.strip;
     strip.textContent = scene.strip || '';

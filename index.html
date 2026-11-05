@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>버블톡</title>
-<meta name="description" content="말하고, 보고, 퐁! 사라지는 대화. 어린이도 안전하게 쓸 수 있는 메신저 버블톡.">
+<meta name="description" content="대화는 사라져도, 사이는 남아요. 아이부터 할머니 할아버지까지, 부담 없이 나누는 메신저 버블톡.">
 <meta property="og:title" content="버블톡">
-<meta property="og:description" content="말하고, 보고, 퐁! 사라지는 대화. 어린이도 안전하게 쓸 수 있는 메신저 버블톡.">
+<meta property="og:description" content="대화는 사라져도, 사이는 남아요. 아이부터 할머니 할아버지까지, 부담 없이 나누는 메신저 버블톡.">
 <meta property="og:image" content="https://bubbletalk.kr/assets/icon-256.png">
 <meta property="og:url" content="https://bubbletalk.kr/">
 <meta name="theme-color" content="#8ECDF2">
@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=3">
+<link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -37,9 +37,27 @@
   <div class="bubbles" aria-hidden="false"></div>
   <div class="wrap">
     <div>
-      <h1>말하고, 보고,<br><em>퐁!</em> 사라지는 대화</h1>
-      <p class="scene-line" id="scene-line">점심 메뉴까지 기록으로 남길 필요는 없으니까요.</p>
-      <p class="lead">버블톡은 말풍선이 정해진 시간만 떠 있다가 사라지는 메신저예요.
+      <h1 id="headline">대화는 사라져도,<br><em>사이</em>는 남아요</h1>
+      <script>
+      // 대표 문구와 아래 문구: 들어올 때마다 하나 (직전 문구는 피함). 글자가 바뀌어 보이지 않게 제목 바로 뒤에서 처리
+      (function () {
+        var H = [
+          ['대화는 사라져도,<br><em>사이</em>는 남아요', '아이부터 할머니 할아버지까지, 부담 없이 나누는 메신저'],
+          ['남기지 않아도 되는 <em>말</em>이<br>더 많으니까요', '오늘 점심 메뉴, 잠깐의 농담, 가벼운 안부까지'],
+          ['읽어야 할 대화 말고,<br><em>나누고 싶은</em> 대화', '쌓인 대화를 따라잡지 않아도 괜찮아요'],
+          ['쌓이는 건 대화가 아니라<br><em>사이</em>니까요', '가족, 친구, 동료와 가볍게 나누는 메신저']
+        ];
+        var last = -1;
+        try { last = parseInt(localStorage.getItem('bt-head'), 10); } catch (e) {}
+        var i = Math.floor(Math.random() * H.length);
+        if (i === last) i = (i + 1) % H.length;
+        try { localStorage.setItem('bt-head', String(i)); } catch (e) {}
+        document.getElementById('headline').innerHTML = H[i][0];
+        document.write('<p class="hero-sub">' + H[i][1] + '</p>');
+      })();
+      </script>
+      <noscript><p class="hero-sub">아이부터 할머니 할아버지까지, 부담 없이 나누는 메신저</p></noscript>
+      <p class="lead">말하고, 보고, 퐁! 버블톡은 말풍선이 정해진 시간만 떠 있다가 사라지는 메신저예요.
         쌓이는 기록 대신, 지금 나누는 대화에 집중할 수 있어요.</p>
       <div class="badges">
         <span class="soon">구글 플레이 출시 준비 중</span>
@@ -101,7 +119,7 @@
     <span class="soon">구글 플레이 출시 준비 중</span>
   </div>
 </section>
-<script src="assets/site.js?v=2" defer></script>
+<script src="assets/site.js?v=3" defer></script>
 </main>
 <footer>
   <div class="wrap">
