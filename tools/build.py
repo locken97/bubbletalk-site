@@ -451,7 +451,7 @@ for _group, _items in FAQ:
 faq_main += '<p class="meta">찾는 내용이 없으면 <a href="inquiry.html">문의하기</a>로 알려 주세요.</p>\n</div></article>'
 
 BOARD_HEAD = ('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>\n'
-              '<script src="assets/board.js"></script>\n')
+              '<script src="assets/board.js?v=2"></script>\n')
 
 
 def board(title, lead, call):

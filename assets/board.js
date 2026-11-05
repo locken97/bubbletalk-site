@@ -297,6 +297,56 @@
     return ['warning', 'suspend7', 'suspend30', 'permanent'][Math.min(n, 3)];
   }
 
+  // ── 운영자 2단계 인증 (서버 44단계): 인증 앱의 6자리 코드 ──
+  async function mfaLevel() {
+    try {
+      var r = await db.auth.mfa.getAuthenticatorAssuranceLevel();
+      return r.data || {};
+    } catch (e) { return {}; }
+  }
+
+  function mfaCodeForm(el, title, extra, onCode) {
+    el.innerHTML = '<form class="form card-form" id="mfa-form"><h2>' + esc(title) + '</h2>' + extra +
+      '<label>인증 앱의 6자리 코드<input id="mfa-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" required></label>' +
+      '<div id="mfa-msg"></div><button class="btn" type="submit">확인</button></form>';
+    $('#mfa-form', el).onsubmit = async function (ev) {
+      ev.preventDefault();
+      var code = $('#mfa-code', el).value.trim();
+      try {
+        await onCode(code);
+      } catch (e) {
+        say($('#mfa-msg', el), '코드가 맞지 않아요. 새 코드로 다시 해 주세요.', true);
+      }
+    };
+  }
+
+  async function mfaVerify(el, onDone) {
+    var list = await db.auth.mfa.listFactors();
+    var f = list.data && list.data.totp && list.data.totp[0];
+    if (!f) { say(el, '등록된 인증 앱을 찾지 못했어요.', true); return; }
+    mfaCodeForm(el, '2단계 인증', '', async function (code) {
+      var r = await db.auth.mfa.challengeAndVerify({ factorId: f.id, code: code });
+      if (r.error) throw r.error;
+      onDone();
+    });
+  }
+
+  async function mfaEnroll(el, onDone) {
+    var list = await db.auth.mfa.listFactors();
+    var old = (list.data && list.data.all || []).filter(function (x) { return x.status !== 'verified'; });
+    for (var i = 0; i < old.length; i++) await db.auth.mfa.unenroll({ factorId: old[i].id });
+    var e = await db.auth.mfa.enroll({ factorType: 'totp', friendlyName: 'bubbletalk-admin' });
+    if (e.error) { say(el, '2단계 인증을 준비하지 못했어요. Supabase의 MFA 설정을 확인해 주세요.', true); return; }
+    var extra = '<p class="hint">운영자 화면을 쓰려면 먼저 등록해 주세요. 구글 OTP 같은 인증 앱으로 아래 그림을 찍거나 코드를 입력해 주세요.</p>' +
+      '<img class="admin-photo" alt="등록용 QR 코드" src="' + esc(e.data.totp.qr_code) + '">' +
+      '<p class="hint small">코드: ' + esc(e.data.totp.secret) + '</p>';
+    mfaCodeForm(el, '2단계 인증 등록', extra, async function (code) {
+      var r = await db.auth.mfa.challengeAndVerify({ factorId: e.data.id, code: code });
+      if (r.error) throw r.error;
+      onDone();
+    });
+  }
+
   async function adminPage() {
     var root = $('#board');
     await loadMe();
@@ -305,8 +355,17 @@
       loginForm(root, adminPage, '운영자 계정으로 로그인해 주세요.');
       return;
     }
+    var level = await mfaLevel();
+    if (level.nextLevel === 'aal2' && level.currentLevel !== 'aal2') {
+      await mfaVerify(root, adminPage);
+      return;
+    }
     if (!me.admin) {
       say(root, '운영자만 볼 수 있어요.', true);
+      return;
+    }
+    if (level.nextLevel !== 'aal2') {
+      await mfaEnroll(root, adminPage);
       return;
     }
     try {
