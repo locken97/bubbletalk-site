@@ -294,3 +294,14 @@ footer p { margin: 4px 0; }
   .nav::-webkit-scrollbar { display: none; }
   .nav a { white-space: nowrap; flex: none; }
 }
+
+/* 앱 화면 사진 (2026-11-09): 넓은 화면은 3장씩 두 줄, 좁은 화면은 옆으로 넘겨 봄 */
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 24px; max-width: 900px; margin: 0 auto; }
+.shot { margin: 0; text-align: center; }
+.shot img { display: block; width: 100%; max-width: 260px; height: auto; margin: 0 auto; border-radius: 26px; border: 6px solid var(--navy); background: var(--cream); box-shadow: 0 10px 28px rgba(47, 53, 84, .14); }
+.shot figcaption { margin-top: 14px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+.shot figcaption b { display: block; color: var(--navy); font-size: 17px; margin-bottom: 2px; }
+@media (max-width: 760px) {
+  .shots { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 16px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; -webkit-overflow-scrolling: touch; }
+  .shot { flex: 0 0 62%; scroll-snap-align: center; }
+}

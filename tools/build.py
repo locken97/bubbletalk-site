@@ -163,6 +163,27 @@ index_main = '''<section class="hero">
   </div>
 </section>
 
+<section class="block" id="screens">
+  <div class="wrap">
+    <h2>앱 화면</h2>
+    <p class="sub">개발 중인 실제 앱 화면이에요. 출시 전에 조금씩 바뀔 수 있어요.</p>
+    <div class="shots">
+      <figure class="shot"><img src="assets/screens/1_dm_pop.webp" width="540" height="1088" loading="lazy" alt="버블톡 앱 화면: 말하고 나면 퐁">
+        <figcaption><b>말하고 나면 퐁</b>정한 시간이 지나면 버블이 사라져요</figcaption></figure>
+      <figure class="shot"><img src="assets/screens/2_lifetime.webp" width="540" height="1088" loading="lazy" alt="버블톡 앱 화면: 버블 수명은 방마다">
+        <figcaption><b>버블 수명은 방마다</b>30초부터 24시간까지 골라요</figcaption></figure>
+      <figure class="shot"><img src="assets/screens/3_guardian.webp" width="540" height="1088" loading="lazy" alt="버블톡 앱 화면: 보호자가 함께">
+        <figcaption><b>보호자가 함께</b>대화 기능, 쉬는 시간, 친구 승인을 정해요</figcaption></figure>
+      <figure class="shot"><img src="assets/screens/4_qr.webp" width="540" height="1088" loading="lazy" alt="버블톡 앱 화면: QR로 친구 맺기">
+        <figcaption><b>QR로 친구 맺기</b>전화번호 없이 아이디와 QR로 연결돼요</figcaption></figure>
+      <figure class="shot"><img src="assets/screens/5_group.webp" width="540" height="1088" loading="lazy" alt="버블톡 앱 화면: 가족 단체방">
+        <figcaption><b>가족 단체방</b>띠와 핀버블로 공지는 남기고, 공감으로 답해요</figcaption></figure>
+      <figure class="shot"><img src="assets/screens/6_quiz.webp" width="540" height="1088" loading="lazy" alt="버블톡 앱 화면: 함께 푸는 퀴즈">
+        <figcaption><b>함께 푸는 퀴즈</b>스피드 퀴즈로 누가 먼저 맞히는지 겨뤄요</figcaption></figure>
+    </div>
+  </div>
+</section>
+
 <section class="block alt" id="features">
   <div class="wrap">
     <h2>버블톡은 이렇게 달라요</h2>
