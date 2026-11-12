@@ -124,12 +124,12 @@ index_main = '''<section class="hero">
   <div class="bubbles" aria-hidden="false"></div>
   <div class="wrap">
     <div>
-      <h1 id="headline">숙제처럼 밀어 두고<br>읽는 글이 아니라,<br><em>지금 함께 나누고 싶은</em> 대화</h1>
+      <h1 id="headline">숙제처럼 미뤄 두고<br>읽는 글이 아니라,<br><em>지금 함께 나누고 싶은</em> 대화</h1>
       <script>
       // 대표 문구와 아래 문구: 들어올 때마다 하나 (직전 문구는 피함). 글자가 바뀌어 보이지 않게 제목 바로 뒤에서 처리
       (function () {
         var H = [
-          ['숙제처럼 밀어 두고<br>읽는 글이 아니라,<br><em>지금 함께 나누고 싶은</em> 대화', '아이부터 어른까지 함께 쓰는 버블 메신저'],
+          ['숙제처럼 미뤄 두고<br>읽는 글이 아니라,<br><em>지금 함께 나누고 싶은</em> 대화', '아이부터 어른까지 함께 쓰는 버블 메신저'],
           ['남기지 않아도 되는 <em>말</em>이<br>더 많으니까요', '오늘 점심 메뉴, 잠깐의 농담, 가벼운 안부까지'],
           ['쌓이는 건 대화가 아니라<br><em>사이</em>니까요', '가족, 친구, 동료와 가볍게 나누는 메신저']
         ];
@@ -510,7 +510,7 @@ def board(title, lead, call):
 <script>document.addEventListener('DOMContentLoaded', function () {{ BubbleBoard.{call}(); }});</script>'''
 
 
-DESC = '숙제처럼 밀어 두고 읽는 글이 아니라, 지금 함께 나누고 싶은 대화. 아이부터 어른까지 함께 쓰는 버블 메신저, 버블톡.'
+DESC = '숙제처럼 미뤄 두고 읽는 글이 아니라, 지금 함께 나누고 싶은 대화. 아이부터 어른까지 함께 쓰는 버블 메신저, 버블톡.'
 # ── 아동 안전 표준 ──────────────────────────
 safety_main = f'''<article class="doc"><div class="wrap">
 <h1>아동 안전 표준</h1>
