@@ -98,7 +98,7 @@ def page(filename, title, desc, main, extra_head=''):
 <footer>
   <div class="wrap">
     <div>
-      <p><strong>버블톡</strong> · 운영 {OPERATOR}</p>
+      <p><strong>버블톡</strong> · 운영 {OPERATOR} · 대표 심자영</p>
       <p>문의 <a href="inquiry.html">문의하기</a> · <a href="mailto:{EMAIL}">{EMAIL}</a></p>
       <p>© 2026 버블톡. All rights reserved.</p>
     </div>
