@@ -322,6 +322,7 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 <h2>11. 개인정보 보호책임자</h2>
 <table class="plain">
 <tr><th>운영자</th><td>{OPERATOR}</td></tr>
+<tr><th>개인정보 보호책임자</th><td>심자영 (대표)</td></tr>
 <tr><th>연락처</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
 </table>
 
@@ -540,7 +541,7 @@ safety_main = f'''<article class="doc"><div class="wrap">
 <li>대한민국 법령을 포함해 적용되는 아동 보호 법령을 지켜요.</li>
 </ul>
 <h2>연락처</h2>
-<p>아동 안전 담당 연락처: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
+<p>아동 안전 담당: 심자영 (대표) · 연락처: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p>아이가 지금 위험하다면 112(경찰)에 바로 신고해 주세요.</p>
 <h2 lang="en">Child Safety Standards (English)</h2>
 <div lang="en">
