@@ -14,7 +14,7 @@ terms_src = (APP / 'lib/data/terms.dart').read_text(encoding='utf-8')
 
 OPERATOR = '메종 드 무아'
 EMAIL = 'bubbletalk.service@gmail.com'
-DRAFT = '법률 검토 전 초안이에요. 정식 출시 전에 내용이 바뀔 수 있어요.'
+DRAFT = '시행일은 아직 정해지지 않았어요. 정해지면 앱과 이 사이트에 알려 드려요.'
 
 
 def dart_doc(name):
@@ -233,7 +233,7 @@ summary, sections = dart_doc('serviceTerms')
 toc = ' · '.join(f'<a href="#s{i}">{html.escape(h)}</a>' for i, (h, _) in enumerate(sections))
 terms_main = f'''<article class="doc"><div class="wrap">
 <h1>서비스 이용약관</h1>
-<p class="meta">운영 {OPERATOR} · 시행일: 정식 출시일</p>
+<p class="meta">운영 {OPERATOR} · 시행일: 미정</p>
 <p class="draft">{DRAFT}</p>
 <div class="summary">{html.escape(summary)}</div>
 <nav class="toc" aria-label="목차">{toc}</nav>
@@ -247,7 +247,7 @@ ps = dict(p_sections)
 gs = dict(g_sections)
 privacy_main = f'''<article class="doc"><div class="wrap">
 <h1>개인정보 처리방침</h1>
-<p class="meta">운영 {OPERATOR} · 시행일: 정식 출시일</p>
+<p class="meta">운영 {OPERATOR} · 시행일: 미정</p>
 <p class="draft">{DRAFT}</p>
 <div class="summary">{html.escape(p_summary)}</div>
 <p>{OPERATOR}(이하 "운영자")는 버블톡(이하 "서비스")을 이용하는 회원의 개인정보를 「개인정보 보호법」에 따라 처리하며, 다음과 같이 처리방침을 알려 드립니다.</p>
