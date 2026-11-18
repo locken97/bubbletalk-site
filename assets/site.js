@@ -11,6 +11,32 @@
     } catch (e) {}
   }
 
+  // 터질 때 물방울 6개: 버블 위에 따로 얹은 층에 그림 (앱과 같은 자리·거리)
+  function drops(el, box) {
+    var r = el.getBoundingClientRect(), o = box.getBoundingClientRect();
+    var layer = document.createElement('div');
+    layer.className = 'drops';
+    // 떠다니는 방울은 움직이는 중이라 지금 보이는 자리 기준, 크기는 커지기 전 크기
+    var w = el.offsetWidth, h = el.offsetHeight;
+    layer.style.left = (r.left - o.left + (r.width - w) / 2) + 'px';
+    layer.style.top = (r.top - o.top + (r.height - h) / 2) + 'px';
+    layer.style.width = w + 'px';
+    layer.style.height = h + 'px';
+    var edge = getComputedStyle(el).getPropertyValue('--edge');
+    if (edge) layer.style.setProperty('--edge', edge);
+    for (var i = 0; i < 6; i++) {
+      var a = (Math.PI * 2 / 6) * i + 0.4, d = document.createElement('i');
+      d.className = 'drop';
+      d.style.left = (50 + Math.cos(a) * 50) + '%';
+      d.style.top = (50 + Math.sin(a) * 50) + '%';
+      d.style.setProperty('--dx', Math.cos(a).toFixed(3));
+      d.style.setProperty('--dy', Math.sin(a).toFixed(3));
+      layer.appendChild(d);
+    }
+    box.appendChild(layer);
+    setTimeout(function () { layer.remove(); }, 460);
+  }
+
   // 떠다니는 방울: 수를 줄이고 천천히
   var field = document.querySelector('.bubbles');
   var MAX_BUBBLES = 4;
@@ -30,15 +56,16 @@
       b.style.animationDelay = (made < MAX_BUBBLES ? -Math.random() * dur : 0) + 's';
       b.addEventListener('click', function () {
         pop();
+        drops(b, field);
         b.classList.add('popped');
-        setTimeout(function () { b.remove(); }, 320);
+        setTimeout(function () { b.remove(); }, 440);
       });
       b.addEventListener('animationiteration', function () { b.style.left = (Math.random() * 96) + '%'; });
       field.appendChild(b);
       made++;
     }
     for (var n = 0; n < MAX_BUBBLES; n++) addBubble();
-    setInterval(function () { if (field.children.length < MAX_BUBBLES) addBubble(); }, 6000);
+    setInterval(function () { if (field.querySelectorAll('.bubble').length < MAX_BUBBLES) addBubble(); }, 6000);
   }
 
   // 예시 장면: 들어올 때마다 하나 (직전 장면은 피함)
@@ -116,8 +143,9 @@
       if (all.length > 3) all[0].classList.add('fade');
       if (all.length > 4) {
         var old = all[0];
+        drops(old, lines);
         old.classList.add('pop');
-        setTimeout(function () { old.remove(); }, 400);
+        setTimeout(function () { old.remove(); }, 440);
       }
       timer = setTimeout(next, 2200);
     }

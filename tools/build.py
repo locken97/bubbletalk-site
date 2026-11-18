@@ -80,7 +80,7 @@ def page(filename, title, desc, main, extra_head=''):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
-<link rel="stylesheet" href="assets/style.css?v=4">
+<link rel="stylesheet" href="assets/style.css?v=5">
 {extra_head}</head>
 <body>
 <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -226,7 +226,7 @@ index_main = '''<section class="hero">
     <span class="soon">구글 플레이 출시 준비 중</span>
   </div>
 </section>
-<script src="assets/site.js?v=3" defer></script>'''
+<script src="assets/site.js?v=4" defer></script>'''
 
 # ── 이용약관 ────────────────────────────────────────
 summary, sections = dart_doc('serviceTerms')
