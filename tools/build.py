@@ -546,7 +546,7 @@ safety_main = f'''<article class="doc"><div class="wrap">
 <h2 lang="en">Child Safety Standards (English)</h2>
 <div lang="en">
 <p>Bubble Talk, operated by Maison de Moi, prohibits child sexual abuse and exploitation (CSAE) and child sexual abuse material (CSAM) in any form, including grooming and threats against children.</p>
-<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Those accounts need guardian approval to become friends with users 14 or older. Guardians are told by email when two children become friends, can remove that friend, and can turn chat off. Users under 14 cannot join group rooms by link, rooms with a child cannot use invite links, and joining a room with adults they do not know needs guardian approval.</p>
+<p>The app does not allow images or files in chats, does not connect strangers, and requires guardian consent for users under 14. Those accounts need guardian approval to become friends with users 14 or older. Guardians can see and remove their child's friends who are 14 or older, can turn chat off, and can set daily rest times. Children under 14 can become friends with each other without guardian approval. Users under 14 cannot join group rooms by link, rooms with a child cannot use invite links, and joining a room with adults they do not know needs guardian approval.</p>
 <p>Users can report bubbles and profiles inside the app. We review reports and warn, suspend, or permanently ban violators. We remove CSAM when we learn of it and report to law enforcement and relevant authorities as required by law.</p>
 <p>Child safety contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
 </div>
