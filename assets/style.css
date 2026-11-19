@@ -313,3 +313,8 @@ footer p { margin: 4px 0; }
   .shots { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 16px; margin: 0 -20px; padding-left: 20px; padding-right: 20px; -webkit-overflow-scrolling: touch; }
   .shot { flex: 0 0 62%; scroll-snap-align: center; }
 }
+
+/* 앱 화면 칸: 스토어 사진처럼 하늘색 배경 + 흰 테두리 (2026-11-19) */
+#screens { background: linear-gradient(180deg, var(--sky) 0%, #A9DAF6 100%); }
+#screens .sub, #screens .shot figcaption { color: var(--navy); }
+#screens .shot img { border-color: #fff; background: #E8F5FD; box-shadow: 0 14px 34px rgba(47, 53, 84, .22); }
