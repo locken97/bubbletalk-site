@@ -14,6 +14,7 @@ terms_src = (APP / 'lib/data/terms.dart').read_text(encoding='utf-8')
 
 OPERATOR = '메종 드 무아'
 EMAIL = 'bubbletalk.service@gmail.com'
+PHONE = '070-4578-8778'
 DRAFT = '시행일은 아직 정해지지 않았어요. 정해지면 앱과 이 사이트에 알려 드려요.'
 
 
@@ -324,6 +325,7 @@ privacy_main = f'''<article class="doc"><div class="wrap">
 <tr><th>운영자</th><td>{OPERATOR}</td></tr>
 <tr><th>개인정보 보호책임자</th><td>심자영 (대표)</td></tr>
 <tr><th>연락처</th><td><a href="mailto:{EMAIL}">{EMAIL}</a></td></tr>
+<tr><th>전화</th><td><a href="tel:+827045788778">{PHONE}</a></td></tr>
 </table>
 
 <h2>12. 권익 침해 구제</h2>
